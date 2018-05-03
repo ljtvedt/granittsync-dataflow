@@ -5,27 +5,12 @@
 var _ = require('lodash');
 var data = require('./GranittSyncDataFlow.json');
 
-var nodeCounter = 1;
-
-function formatEllipsizedText(text, maxLength) {
-    if (text.length > maxLength - 1) {
-        return text.substring(0, maxLength - 1) + '…';
-    } else {
-        return text;
-    }
-}
-
-/*
-function json2gvLabel(obj) {
-    return _.map(_.keys(obj), function (key) { return '<' + key + '> ' + key; }).join('|');
-}
-*/
-
 var nodeTypeAttributes = {"table": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="azure3"',
 						  "synonym": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="gold"',
 						  "view": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="darkviolet"',
-						  "materialized view": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="blue"'};
+						  "materialized view": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="cyan"'};
 
+var nodeCounter = 1;
 var edges = [];
 var nodes = {};
 
@@ -69,7 +54,7 @@ function nodeAttributes(node) {
 handleNodeArray(data);
 
 console.log('digraph g {');
-console.log('graph [rankdir = "TB"];');
+console.log('graph [rankdir = "LR"];');
 //console.log('graph [rankdir = "LR", nodesep=0.1, ranksep=0.3];');
 //console.log('node [fontsize = "16", shape = "record", height=0.1, color=lightblue2];');
 //console.log('node [];');

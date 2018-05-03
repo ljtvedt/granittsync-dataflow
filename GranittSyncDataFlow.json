@@ -80,17 +80,35 @@
   },
   { 
     "schema" : "Granitt", 
-    "name" : "Categories", 
-    "type" : "table"
+    "name"   : "Categories", 
+    "type"   : "table"
   },
   { 
     "schema" : "Granitt", 
-    "name" : "Programmes", 
-    "type" : "table"
+    "name"   : "Programmes", 
+    "type"   : "table",
+	"from"   : ["Granitt.MV_PI_PROGRAM", "Granitt.TRANSMISSIONS", "Granitt.CHANNELS"] 
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Series", 
+    "type"   : "table"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Transmissions", 
+    "type"   : "table",
+	"from"   : "Granitt.MV_PI_TRANSMISSIONS_CURRENT"
   },
   { 
     "schema" : "Granitt", 
     "name"   : "Transmission_Groups", 
+    "type"   : "table",
+	"from"   : "Granitt.MV_PI_TRANS_GROUP_CURRENT"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Rights", 
     "type"   : "table"
   },
   {
@@ -155,11 +173,52 @@
   },
   { 
     "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Trans_Group_Current", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.MV_SENDING", "Granitt.Channels"]
+  },
+  { 
+    "schema" : "Granitt", 
     "name"   : "Mv_Pi_Simulcast", 
     "type"   : "materialized view",
 	"from"   : ["PI.PISENDING_T1", "PI.PISENDING_T0","PI.samsending", "Granitt.Programmes", "Granitt.Channels", "Granitt.Transmission_Groups"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Series_Categories", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.mv_pi_collections_current", "Granitt.Series", "Granitt.Categories"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Series_Extra_Material", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.MV_PI_COLLECTIONS_PROGRAMS", "Granitt.PROGRAMMES", "Granitt.RIGHTS", "Granitt.SERIES", "Granitt.TRANSMISSIONS"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Series_Programs_Current", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.MV_PI_COLLECTIONS_PROGRAMS", "Granitt.PROGRAMMES", "Granitt.RIGHTS", "Granitt.SERIES", "Granitt.TRANSMISSIONS"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Series_Versions_Programs", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.SERIES", "Granitt.MV_PI_COLLECTIONS_PROGRAMS", "Granitt.PROGRAMMES", "Granitt.TRANSMISSIONS"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Program_Categories", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.PROGRAMMES", "Granitt.MV_PI_PROGRAM_CATEGORY_CURRENT"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Program_Version_Category", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.categories", "Granitt.programmes", "Granitt.MV_PI_PROGRAM_CATEGORY_CURRENT"]
   }
-
   
 
 ]
