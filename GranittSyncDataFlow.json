@@ -59,6 +59,22 @@
     "type" : "synonym",
 	"from" : "PI.PISamsending_T0"
   },
+  { 
+    "name" : "Granitt.Channels", 
+    "type" : "table"
+  },
+  { 
+    "name" : "Granitt.Categories", 
+    "type" : "table"
+  },
+  { 
+    "name" : "Granitt.Programmes", 
+    "type" : "table"
+  },
+  { 
+    "name" : "Granitt.Transmission_Groups", 
+    "type" : "table"
+  },
   {
     "name" : "Granitt.Mv_Program", 
     "type" : "materialized view",
@@ -68,6 +84,53 @@
     "name" : "Granitt.Mv_Sending", 
     "type" : "materialized view",
 	"from" : ["PI.PISending_T0", "PI.PISending_T1"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Omtaler_Current", 
+    "type" : "materialized view",
+	"from" : ["PI.Omtaler", "Granitt.Channels"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Collections_Current", 
+    "type" : "materialized view",
+	"from" : ["PI.Serier", "PI.Serie", "Granitt.Mv_Program"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Collections_Programs", 
+    "type" : "materialized view",
+	"from" : ["PI.Serier", "PI.Serie"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Program", 
+    "type" : "materialized view",
+	"from" : ["Granitt.Mv_Program"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Prog_Description_Current", 
+    "type" : "materialized view",
+	"from" : ["Granitt.Programmes", "Granitt.Mv_Program"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Program_Category_Current", 
+    "type" : "materialized view",
+	"from" : ["Granitt.Programmes", "Granitt.Categories"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Program_Title_Current", 
+    "type" : "materialized view",
+	"from" : ["Granitt.MV_PI_TRANSMISSIONS_CURRENT", "Granitt.Programmes", "PI.PITITTEL_T1", "Granitt.MV_PROGRAM"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Transmissions_Current", 
+    "type" : "materialized view",
+	"from" : ["Granitt.MV_SENDING", "Granitt.mv_pi_simulcast", "Granitt.Programmes", "Granitt.Channels", "Granitt.Transmission_Groups"]
+  },
+  { 
+    "name" : "Granitt.Mv_Pi_Simulcast", 
+    "type" : "materialized view",
+	"from" : ["PI.PISENDING_T1", "PI.PISENDING_T0","PI.samsending", "Granitt.Programmes", "Granitt.Channels", "Granitt.Transmission_Groups"]
   }
+  
+  
 
 ]

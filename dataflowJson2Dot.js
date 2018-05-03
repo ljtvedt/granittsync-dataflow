@@ -15,27 +15,30 @@ function formatEllipsizedText(text, maxLength) {
     }
 }
 
+/*
 function json2gvLabel(obj) {
     return _.map(_.keys(obj), function (key) { return '<' + key + '> ' + key; }).join('|');
 }
+*/
 
-function name2id(name) {
-	return name.replace(".", "#");
-}
+var nodeTypeAttributes = {"table": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="azure3"',
+						  "synonym": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="gold"',
+						  "view": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="darkviolet"',
+						  "materialized view": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="blue"'};
 
 var edges = [];
 var nodes = {};
 
 function handleNode (obj) {
 	var myId = nodeCounter++;
-	nodes[obj.name] = {id: myId, name: obj.name, label: obj.name}
+	nodes[obj.name.toUpperCase()] = {id: myId, name: obj.name, label: obj.name, type: obj.type}
 	if ('from' in obj) {
 		if (_.isArray(obj.from)) {
 		    _.map(obj.from, function(n) {
-				edges.push({from: n, to: myId})
+				edges.push({from: n.toUpperCase(), to: myId})
 			});
 		} else {
-			edges.push({from: obj.from, to: myId})
+			edges.push({from: obj.from.toUpperCase(), to: myId})
 		}
 	}
 }
@@ -46,6 +49,11 @@ function handleNodeArray(array) {
 	})	
 }
 
+function nodeAttributes(node) {
+	return '[label="' + node.label + '" ' + nodeTypeAttributes[node.type] + '];'
+}
+
+/*
 function recurse(parentNode, obj) {
     var myId = nodeCounter++;
     edges.push({from: parentNode, to: myId});
@@ -61,20 +69,26 @@ function recurse(parentNode, obj) {
         });
     }
 }
+*/
 
 //recurse('root', datak);
 handleNodeArray(data);
 
 console.log('digraph g {');
 console.log('graph [rankdir = "LR", nodesep=0.1, ranksep=0.3];');
-console.log('node [fontsize = "16", shape = "record", height=0.1, color=lightblue2];');
+//console.log('node [fontsize = "16", shape = "record", height=0.1, color=lightblue2];');
+//console.log('node [];');
 console.log('edge [];');
 
 _.map(nodes, function (n) {
-    console.log(n.id + '[label="' + n.label + '"];');
+    console.log(n.id + nodeAttributes(n));
 });
 _.map(edges, function (e) {
-    console.log(nodes[e.from].id + '->' + e.to + ';');
+	if (nodes[e.from.toUpperCase()] != undefined) {
+		console.log(nodes[e.from.toUpperCase()].id + '->' + e.to + ';');
+	} else {
+		throw "Unable to identify node with name " + e.from;
+	}
 });
 
 console.log('}');
