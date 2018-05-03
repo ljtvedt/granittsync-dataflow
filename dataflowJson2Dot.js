@@ -66,36 +66,24 @@ function nodeAttributes(node) {
 	return `[${attrLabel(node)}, ${attrToolTip(node)}, ${nodeTypeAttributes[node.type]}];`
 }
 
-/*
-function recurse(parentNode, obj) {
-    var myId = nodeCounter++;
-    edges.push({from: parentNode, to: myId});
-    if (_.isArray(obj)) {
-        nodes.push({id: myId, label: 'array'});
-        recurse(myId, obj[0]);
-    } else if (!_.isObject(obj)) {
-        nodes.push({id: myId, label: formatEllipsizedText('' + obj, 50)});
-    } else {
-        nodes.push({id: myId, label: json2gvLabel(obj)});
-        _.each(obj, function (v, k) {
-            recurse(myId + ':' + k, v);
-        });
-    }
-}
-*/
-
-//recurse('root', datak);
 handleNodeArray(data);
 
 console.log('digraph g {');
-console.log('graph [rankdir = "LR", nodesep=0.1, ranksep=0.3];');
+console.log('graph [rankdir = "TB"];');
+//console.log('graph [rankdir = "LR", nodesep=0.1, ranksep=0.3];');
 //console.log('node [fontsize = "16", shape = "record", height=0.1, color=lightblue2];');
 //console.log('node [];');
 console.log('edge [];');
 
-_.map(nodes, function (n) {
-    console.log(n.id + nodeAttributes(n));
-});
+// Write a cluster for each "schema"
+var cluster = _.groupBy(nodes, function (n) { return n.schema; });
+var cluster_iterator = 0;
+_.map(Object.keys(cluster), function (k) {
+		console.log(`subgraph cluster_${cluster_iterator++} { label = "${k}";`)
+		_.map(cluster[k], function (n) { console.log(n.id + nodeAttributes(n));});
+		console.log("}")
+	});
+
 _.map(edges, function (e) {
 	if (nodes[e.from.toUpperCase()] != undefined) {
 		console.log(nodes[e.from.toUpperCase()].id + '->' + e.to + ';');
