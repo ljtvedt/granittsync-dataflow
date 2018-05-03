@@ -1,136 +1,165 @@
 [
   { 
-    "name" : "PI.PIOmtaler_T0", 
+    "schema" : "PI", 
+	"name" : "PIOmtaler_T0", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PISerie_T0", 
+    "schema" : "PI", 
+    "name" : "PISerie_T0", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PISerier_T0", 
+    "schema" : "PI", 
+    "name" : "PISerier_T0", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PIProgram_T0", 
+    "schema" : "PI", 
+    "name" : "PIProgram_T0", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PIProgram_T1", 
+    "schema" : "PI", 
+    "name" : "PIProgram_T1", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PITittel_T1", 
+    "schema" : "PI", 
+    "name" : "PITittel_T1", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PISending_T0", 
+    "schema" : "PI", 
+    "name" : "PISending_T0", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PISending_T1", 
+    "schema" : "PI", 
+    "name" : "PISending_T1", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PISamsending_T0", 
+    "schema" : "PI", 
+    "name" : "PISamsending_T0", 
     "type" : "table"
   },
   { 
-    "name" : "PI.PITekstobject_T0", 
+    "schema" : "PI", 
+    "name" : "PITekstobject_T0", 
     "type" : "table"
   },
   { 
-    "name" : "PI.Omtaler", 
+    "schema" : "PI", 
+    "name" : "Omtaler", 
     "type" : "synonym",
 	"from" : "PI.PIOmtaler_T0"
   },
   { 
-    "name" : "PI.Serie", 
+    "schema" : "PI", 
+    "name" : "Serie", 
     "type" : "synonym",
 	"from" : "PI.PISerie_T0"
   },
   { 
-    "name" : "PI.Serier", 
+    "schema" : "PI", 
+    "name" : "Serier", 
     "type" : "synonym",
 	"from" : "PI.PISerier_T0"
   },
   { 
-    "name" : "PI.Samsending", 
+    "schema" : "PI", 
+    "name" : "Samsending", 
     "type" : "synonym",
 	"from" : "PI.PISamsending_T0"
   },
   { 
-    "name" : "Granitt.Channels", 
+    "schema" : "Granitt", 
+    "name" : "Channels", 
     "type" : "table"
   },
   { 
-    "name" : "Granitt.Categories", 
+    "schema" : "Granitt", 
+    "name" : "Categories", 
     "type" : "table"
   },
   { 
-    "name" : "Granitt.Programmes", 
+    "schema" : "Granitt", 
+    "name" : "Programmes", 
     "type" : "table"
   },
   { 
-    "name" : "Granitt.Transmission_Groups", 
-    "type" : "table"
+    "schema" : "Granitt", 
+    "name"   : "Transmission_Groups", 
+    "type"   : "table"
   },
   {
-    "name" : "Granitt.Mv_Program", 
-    "type" : "materialized view",
-	"from" : ["PI.PIProgram_T0", "PI.PIProgram_T1"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Program", 
+    "type"   : "materialized view",
+	"from"   : ["PI.PIProgram_T0", "PI.PIProgram_T1"]
   },
   { 
-    "name" : "Granitt.Mv_Sending", 
-    "type" : "materialized view",
-	"from" : ["PI.PISending_T0", "PI.PISending_T1"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Sending", 
+    "type"   : "materialized view",
+	"from"   : ["PI.PISending_T0", "PI.PISending_T1"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Omtaler_Current", 
-    "type" : "materialized view",
-	"from" : ["PI.Omtaler", "Granitt.Channels"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Omtaler_Current", 
+    "type"   : "materialized view",
+	"from"   : ["PI.Omtaler", "Granitt.Channels"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Collections_Current", 
-    "type" : "materialized view",
-	"from" : ["PI.Serier", "PI.Serie", "Granitt.Mv_Program"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Collections_Current", 
+    "type"   : "materialized view",
+	"from"   : ["PI.Serier", "PI.Serie", "Granitt.Mv_Program"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Collections_Programs", 
-    "type" : "materialized view",
-	"from" : ["PI.Serier", "PI.Serie"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Collections_Programs", 
+    "type"   : "materialized view",
+	"from"   : ["PI.Serier", "PI.Serie"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Program", 
-    "type" : "materialized view",
-	"from" : ["Granitt.Mv_Program"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Program", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.Mv_Program"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Prog_Description_Current", 
-    "type" : "materialized view",
-	"from" : ["Granitt.Programmes", "Granitt.Mv_Program"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Prog_Description_Current", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.Programmes", "Granitt.Mv_Program"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Program_Category_Current", 
-    "type" : "materialized view",
-	"from" : ["Granitt.Programmes", "Granitt.Categories"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Program_Category_Current", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.Programmes", "Granitt.Categories"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Program_Title_Current", 
-    "type" : "materialized view",
-	"from" : ["Granitt.MV_PI_TRANSMISSIONS_CURRENT", "Granitt.Programmes", "PI.PITITTEL_T1", "Granitt.MV_PROGRAM"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Program_Title_Current", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.MV_PI_TRANSMISSIONS_CURRENT", "Granitt.Programmes", "PI.PITITTEL_T1", "Granitt.MV_PROGRAM"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Transmissions_Current", 
-    "type" : "materialized view",
-	"from" : ["Granitt.MV_SENDING", "Granitt.mv_pi_simulcast", "Granitt.Programmes", "Granitt.Channels", "Granitt.Transmission_Groups"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Transmissions_Current", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.MV_SENDING", "Granitt.mv_pi_simulcast", "Granitt.Programmes", "Granitt.Channels", "Granitt.Transmission_Groups"]
   },
   { 
-    "name" : "Granitt.Mv_Pi_Simulcast", 
-    "type" : "materialized view",
-	"from" : ["PI.PISENDING_T1", "PI.PISENDING_T0","PI.samsending", "Granitt.Programmes", "Granitt.Channels", "Granitt.Transmission_Groups"]
+    "schema" : "Granitt", 
+    "name"   : "Mv_Pi_Simulcast", 
+    "type"   : "materialized view",
+	"from"   : ["PI.PISENDING_T1", "PI.PISENDING_T0","PI.samsending", "Granitt.Programmes", "Granitt.Channels", "Granitt.Transmission_Groups"]
   }
-  
+
   
 
 ]

@@ -29,9 +29,10 @@ var nodeTypeAttributes = {"table": 'fontsize = "16", shape = "record", height=0.
 var edges = [];
 var nodes = {};
 
+
 function handleNode (obj) {
 	var myId = nodeCounter++;
-	nodes[obj.name.toUpperCase()] = {id: myId, name: obj.name, label: obj.name, type: obj.type}
+	nodes[obj.schema.toUpperCase() + '.' + obj.name.toUpperCase()] = {id: myId, schema: obj.schema, name: obj.name, type: obj.type}
 	if ('from' in obj) {
 		if (_.isArray(obj.from)) {
 		    _.map(obj.from, function(n) {
@@ -49,8 +50,20 @@ function handleNodeArray(array) {
 	})	
 }
 
+function capitalizeFirst(s) {
+	return s.trim().charAt(0).toUpperCase() + s.trim().slice(1);
+}
+
+function attrToolTip(node) {
+	return `tooltip="${capitalizeFirst(node.type)} ${node.schema}.${node.name}"` 
+}
+
+function attrLabel(node) {
+	return `label="${node.name}"` 
+}
+
 function nodeAttributes(node) {
-	return '[label="' + node.label + '" ' + nodeTypeAttributes[node.type] + '];'
+	return `[${attrLabel(node)}, ${attrToolTip(node)}, ${nodeTypeAttributes[node.type]}];`
 }
 
 /*
