@@ -1,0 +1,63 @@
+[
+  { 
+    "name" : "PI.PIOmtaler_T0", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PISerie_T0", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PISerier_T0", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PIProgram_T0", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PIProgram_T1", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PITittel_T1", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PISending_T0", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PISending_T1", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PISamsending_T0", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.PITekstobject_T0", 
+    "type" : "table"
+  },
+  { 
+    "name" : "PI.Omtaler", 
+    "type" : "synonym",
+	"from" : "PI.PIOmtaler_T0"
+  },
+  { 
+    "name" : "PI.Serie", 
+    "type" : "synonym",
+	"from" : "PI.PISerie_T0"
+  },
+  { 
+    "name" : "PI.Serier", 
+    "type" : "synonym",
+	"from" : "PI.PISerier_T0"
+  },
+  { 
+    "name" : "PI.Samsending", 
+    "type" : "synonym",
+	"from" : "PI.PISamsending_T0"
+  }
+   
+]
