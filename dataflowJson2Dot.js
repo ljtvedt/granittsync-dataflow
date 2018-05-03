@@ -19,12 +19,25 @@ function json2gvLabel(obj) {
     return _.map(_.keys(obj), function (key) { return '<' + key + '> ' + key; }).join('|');
 }
 
+function name2id(name) {
+	return name.replace(".", "#");
+}
+
 var edges = [];
-var nodes = [];
+var nodes = {};
 
 function handleNode (obj) {
-	nodes.push({id: obj.name, label: obj.type})
-	edges.push({from: obj.from, to: obj.name})
+	var myId = nodeCounter++;
+	nodes[obj.name] = {id: myId, name: obj.name, label: obj.name}
+	if ('from' in obj) {
+		if (_.isArray(obj.from)) {
+		    _.map(obj.from, function(n) {
+				edges.push({from: n, to: myId})
+			});
+		} else {
+			edges.push({from: obj.from, to: myId})
+		}
+	}
 }
 
 function handleNodeArray(array) {
@@ -61,7 +74,7 @@ _.map(nodes, function (n) {
     console.log(n.id + '[label="' + n.label + '"];');
 });
 _.map(edges, function (e) {
-    console.log(e.from + '->' + e.to + ';');
+    console.log(nodes[e.from].id + '->' + e.to + ';');
 });
 
 console.log('}');

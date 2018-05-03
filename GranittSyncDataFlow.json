@@ -58,6 +58,16 @@
     "name" : "PI.Samsending", 
     "type" : "synonym",
 	"from" : "PI.PISamsending_T0"
+  },
+  {
+    "name" : "Granitt.Mv_Program", 
+    "type" : "materialized view",
+	"from" : ["PI.PIProgram_T0", "PI.PIProgram_T1"]
+  },
+  { 
+    "name" : "Granitt.Mv_Sending", 
+    "type" : "materialized view",
+	"from" : ["PI.PISending_T0", "PI.PISending_T1"]
   }
-   
+
 ]
