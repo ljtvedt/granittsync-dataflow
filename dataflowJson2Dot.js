@@ -14,17 +14,21 @@ var nodeCounter = 1;
 var edges = [];
 var nodes = {};
 
+function nodeUniqueName(node) {
+	return (node.schema + '.' + node.name).toUpperCase()
+}
 
 function handleNode (obj) {
-	var myId = nodeCounter++;
-	nodes[obj.schema.toUpperCase() + '.' + obj.name.toUpperCase()] = {id: myId, schema: obj.schema, name: obj.name, type: obj.type}
+var node = {id: nodeCounter++, schema: obj.schema, name: obj.name, type: obj.type};
+	
+	nodes[nodeUniqueName(node)] = node;
 	if ('from' in obj) {
 		if (_.isArray(obj.from)) {
 		    _.map(obj.from, function(n) {
-				edges.push({from: n.toUpperCase(), to: myId})
+				edges.push({from: n.toUpperCase(), to: nodeUniqueName(node)})
 			});
 		} else {
-			edges.push({from: obj.from.toUpperCase(), to: myId})
+			edges.push({from: obj.from.toUpperCase(), to: nodeUniqueName(node)})
 		}
 	}
 }
@@ -51,9 +55,13 @@ function nodeAttributes(node) {
 	return `[${attrLabel(node)}, ${attrToolTip(node)}, ${nodeTypeAttributes[node.type]}];`
 }
 
+function edgeStmt(from, to) {
+	return `${nodes[from].id}->${nodes[to].id} [tooltip="From: ${nodes[from].name}&#013;&#010;To: ${nodes[to].name}"];`
+}
+
 handleNodeArray(data);
 
-console.log('digraph g {');
+console.log('digraph GranittSyncDataFlow {');
 console.log('graph [rankdir = "LR"];');
 //console.log('graph [rankdir = "LR", nodesep=0.1, ranksep=0.3];');
 //console.log('node [fontsize = "16", shape = "record", height=0.1, color=lightblue2];');
@@ -71,7 +79,7 @@ _.map(Object.keys(cluster), function (k) {
 
 _.map(edges, function (e) {
 	if (nodes[e.from.toUpperCase()] != undefined) {
-		console.log(nodes[e.from.toUpperCase()].id + '->' + e.to + ';');
+		console.log(edgeStmt(e.from, e.to));
 	} else {
 		throw "Unable to identify node with name " + e.from;
 	}

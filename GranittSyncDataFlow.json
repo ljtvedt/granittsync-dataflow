@@ -91,6 +91,12 @@
   },
   { 
     "schema" : "Granitt", 
+    "name"   : "Programmes_Titles", 
+    "type"   : "table",
+	"from"   : ["Granitt.MV_PI_PROGRAM_TITLE_CURRENT"] 
+  },
+  { 
+    "schema" : "Granitt", 
     "name"   : "Series", 
     "type"   : "table"
   },
