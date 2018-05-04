@@ -51,8 +51,12 @@ function attrLabel(node) {
 	return `label="${node.name}"` 
 }
 
+function attrURL(node) {
+return `href="https://confluence.nrk.no/display/ODA/${node.name.toUpperCase()}" target="_graphviz"` 
+}
+
 function nodeAttributes(node) {
-	return `[${attrLabel(node)}, ${attrToolTip(node)}, ${nodeTypeAttributes[node.type]}];`
+	return `[${attrLabel(node)}, ${attrToolTip(node)}, ${attrURL(node)}, ${nodeTypeAttributes[node.type]}];`
 }
 
 function edgeStmt(from, to) {
@@ -63,17 +67,15 @@ handleNodeArray(data);
 
 console.log('digraph GranittSyncDataFlow {');
 console.log('graph [rankdir = "LR"];');
-//console.log('graph [rankdir = "LR", nodesep=0.1, ranksep=0.3];');
-//console.log('node [fontsize = "16", shape = "record", height=0.1, color=lightblue2];');
-//console.log('node [];');
+console.log('node [];');
 console.log('edge [];');
 
 // Write a cluster for each "schema"
 var cluster = _.groupBy(nodes, function (n) { return n.schema; });
 var cluster_iterator = 0;
 _.map(Object.keys(cluster), function (k) {
-		console.log(`subgraph cluster_${cluster_iterator++} { label = "${k}";`)
-		_.map(cluster[k], function (n) { console.log(n.id + nodeAttributes(n));});
+		console.log(`subgraph cluster_${cluster_iterator++} { label = "${k}";`) // Write a cluster for each schema
+		_.map(cluster[k], function (n) { console.log(n.id + nodeAttributes(n));}); // Write all nodes in cluster
 		console.log("}")
 	});
 
