@@ -16,3 +16,4 @@ node dataflowJson2Dot.js | dot -Tpdf > GranittSyncDataFlow.pdf
 Kjører du med PowerShell, sett OutputEncoding = 'ASCII':
 ```
 $PSDefaultParameterValues['Out-File:Encoding'] = 'ascii'
+

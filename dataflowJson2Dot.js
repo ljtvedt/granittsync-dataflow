@@ -1,7 +1,5 @@
 'use strict';
 
-//https://stackoverflow.com/questions/22727974/automatic-visualization-of-json
-
 var _ = require('lodash');
 var data = require('./GranittSyncDataFlow.json');
 
@@ -20,7 +18,7 @@ function nodeUniqueName(node) {
 
 function edge(s, t) {
 	if (_.isObject(s)) {
-		return {from: s.source.toUpperCase(), to: nodeUniqueName(t), by: s.by}
+		return {from: s.name.toUpperCase(), to: nodeUniqueName(t), by: s.by}
 	}
 	else {
 		return{from: s.toUpperCase(), to: nodeUniqueName(t)}
@@ -70,16 +68,18 @@ function nodeAttributes(node) {
 
 function edgeStmt(from, to, by) {
 	var stmt = `${nodes[from].id}->${nodes[to].id}`
-	var tooltip = `tooltip="From: ${nodes[from].name}&#013;&#010;To: ${nodes[to].name}"`
+	var tooltip = "";
 	var color = "";
 	var label = "";
 	
 	if (by != undefined) {
 		color = `color="red"`
 		label = `label="${by}"`;
+		tooltip = `tooltip="From: ${nodes[from].name}&#013;&#010;To: ${nodes[to].name}&#013;&#010;By: ${by}"`
 	} else {
 		color = `color="black"`
 		label = `label=""`;
+		tooltip = `tooltip="From: ${nodes[from].name}&#013;&#010;To: ${nodes[to].name}"`
 	}
 	return `${stmt} [${label}, ${tooltip}, ${color}];`
 }

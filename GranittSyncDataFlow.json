@@ -85,32 +85,143 @@
   },
   { 
     "schema" : "Granitt", 
+    "name"   : "Geolocations", 
+    "type"   : "table"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Lists", 
+    "type"   : "table"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Lists_Plugs", 
+    "type"   : "table"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Lists_Objects_Map", 
+    "type"   : "table"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Filesets_Parts", 
+    "type"   : "table"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Metadata_Source_Priorities", 
+    "type"   : "table"
+  },
+  { 
+    "schema" : "Granitt", 
     "name"   : "Programmes", 
     "type"   : "table",
-	"from"   : [{"source": "Granitt.MV_PI_PROGRAM", "by": "Pi_Sync.Sync_Programs"}, "Granitt.TRANSMISSIONS", "Granitt.CHANNELS"] 
+	"from"   : [{"name": "Granitt.MV_PI_PROGRAM", "by": "Pi_Sync.Sync_Programs"}, 
+				{"name": "Granitt.TRANSMISSIONS", "by": "Pi_Sync.Sync_Transmissions"}, 
+				{"name": "Granitt.CHANNELS", "by": "Pi_Sync.Sync_Transmissions"},
+				{"name": "Granitt.MV_PI_SERIES_PROGRAMS_CURRENT", "by": "Pi_Sync.Sync_Seasons"},
+				{"name": "Granitt.SEASONS", "by": "Pi_Sync.Sync_Seasons"},
+				{"name": "Granitt.V_GRANITT_SEASONS_NUMBERWISE", "by": "Pi_Sync.Sync_Seasons_NumberWise"},
+				{"name": "Granitt.MV_PI_SERIES_PROGRAMS_CURRENT", "by": "Pi_Sync.Sync_Seasons_NumberWise"},
+				{"name": "Granitt.SERIES", "by": "Pi_Sync.Sync_Seasons_NumberWise"},
+				{"name": "Granitt.SEASONS", "by": "Pi_Sync.Sync_Seasons_NumberWise"}
+			   ] 
   },
   { 
     "schema" : "Granitt", 
     "name"   : "Programmes_Titles", 
     "type"   : "table",
-	"from"   : ["Granitt.MV_PI_PROGRAM_TITLE_CURRENT"] 
+	"from"   : {"name": "Granitt.MV_PI_PROGRAM_TITLE_CURRENT", "by": "Pi_Sync.Sync_Program_Titles"}
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Programmes_Descriptions", 
+    "type"   : "table",
+	"from"   : {"name": "Granitt.MV_PI_PROG_DESCRIPTION_CURRENT", "by": "Pi_Sync.Sync_Program_Descriptions"}
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Programmes_Images", 
+    "type"   : "table"
   },
   { 
     "schema" : "Granitt", 
     "name"   : "Series", 
+    "type"   : "table",
+	"from"   : {"name": "Granitt.MV_PI_COLLECTIONS_CURRENT", "by": "Pi_Sync.Sync_Series"}
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Series_Categories_Map", 
+    "type"   : "table",
+	"from"   : {"name": "Granitt.MV_SERIES_CATEGORIES", "by": "Pi_Sync.Sync_Series_Categories"}
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Series_Images", 
     "type"   : "table"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Series_Titles", 
+    "type"   : "table",
+	"from"   : [{"name": "Granitt.MV_PI_COLLECTIONS_CURRENT", "by": "Pi_Sync.Sync_Series_Descriptions"},
+				{"name": "Granitt.SERIES", "by": "Pi_Sync.Sync_Series_Descriptions"}]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Series_Descriptions", 
+    "type"   : "table",
+	"from"   : [{"name": "Granitt.MV_PI_COLLECTIONS_CURRENT", "by": "Pi_Sync.Sync_Series_Descriptions"},
+				{"name": "Granitt.SERIES", "by": "Pi_Sync.Sync_Series_Descriptions"}]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Series_Extra_Material_Map", 
+    "type"   : "table",
+	"from"   : {"name": "Granitt.MV_PI_SERIES_EXTRA_MATERIAL", "by": "Pi_Sync.Sync_Series_Extra_Material"}
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Series_Versions_Programs_Map", 
+    "type"   : "table",
+	"from"   : {"name": "Granitt.MV_FAKE_SERIES", "by": "Pi_Sync.Sync_Versioned_Series_Programs"}
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Seasons", 
+    "type"   : "table",
+	"from"   : [{"name": "Granitt.SERIES", "by": "Pi_Sync.Sync_Seasons"},
+				{"name": "Granitt.MV_PI_SERIES_PROGRAMS_CURRENT", "by": "Pi_Sync.Sync_Seasons"},
+				{"name": "Granitt.MV_PI_SERIES_PROGRAMS_CURRENT", "by": "Pi_Sync.Sync_Seasons_NumberWise"},
+				{"name": "Granitt.V_GRANITT_SEASONS_NUMBERWISE", "by": "Pi_Sync.Sync_Seasons_NumberWise"},
+				{"name": "Granitt.programmes", "by": "Pi_Sync.Sync_Seasons_NumberWise"}
+				]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Programmes_Categories_Map", 
+    "type"   : "table",
+	"from"   : {"name": "Granitt.MV_PROGRAM_CATEGORIES", "by": "Pi_Sync.Sync_Program_Categories"}
   },
   { 
     "schema" : "Granitt", 
     "name"   : "Transmissions", 
     "type"   : "table",
-	"from"   : "Granitt.MV_PI_TRANSMISSIONS_CURRENT"
+	"from"   : {"name": "Granitt.MV_PI_TRANSMISSIONS_CURRENT", "by": "Pi_Sync.Sync_Transmissions"}
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Alphabet_list", 
+    "type"   : "table",
+	"from"   : {"name": "Granitt.MV_GRANITT_ALPHABETLST_CURRENT", "by": "Pi_Sync.Sync_Alphabet_List"}
   },
   { 
     "schema" : "Granitt", 
     "name"   : "Transmission_Groups", 
     "type"   : "table",
-	"from"   : "Granitt.MV_PI_TRANS_GROUP_CURRENT"
+	"from"   : {"name": "Granitt.MV_PI_TRANS_GROUP_CURRENT", "by": "Pi_Sync.Sync_Transmission_Groups"}
   },
   { 
     "schema" : "Granitt", 
@@ -224,6 +335,85 @@
     "name"   : "Mv_Program_Version_Category", 
     "type"   : "materialized view",
 	"from"   : ["Granitt.categories", "Granitt.programmes", "Granitt.MV_PI_PROGRAM_CATEGORY_CURRENT"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Fake_Series", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.SEASONS", "Granitt.MV_PI_SERIES_VERSIONS_PROGRAMS", "Granitt.V_GRANITT_SEASONS_NUMBERWISE"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Granitt_Alphabetlst_Current", 
+    "type"   : "materialized view",
+	"from"   : ["Granitt.TRANSMISSIONS", 
+				"Granitt.PROGRAMMES_IMAGES", 
+				"Granitt.RIGHTS", 
+				"Granitt.PROGRAMMES", 
+				"Granitt.GEOLOCATIONS", 
+				"Granitt.SERIES_TITLES", 
+				"Granitt.SEASONS",
+				"Granitt.CHANNELS",
+				"Granitt.PROGRAMMES_CATEGORIES_MAP",
+				"Granitt.CATEGORIES",
+				"Granitt.SERIES_CATEGORIES_MAP",
+				"Granitt.PROGRAMMES_TITLES",
+				"Granitt.METADATA_SOURCE_PRIORITIES",
+				"Granitt.SERIES",
+				"Granitt.SERIES_IMAGES",
+				"Granitt.SERIES_EXTRA_MATERIAL_MAP"
+				]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "Mv_Web_Programmes", 
+    "type"   : "materialized view",
+	"from"   : "Granitt.V_WEB_PROGRAMMES"
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "V_Granitt_Seasons_Numberwise", 
+    "type"   : "view",
+	"from"   : ["Granitt.SEASONS", "Granitt.SERIES"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "V_Web_Programmes", 
+    "type"   : "view",
+	"from"   : ["Granitt.CHANNELS",
+				"Granitt.PROGRAMMES_IMAGES",
+				"Granitt.SERIES_IMAGES",
+				"Granitt.SERIES_TITLES",
+				"Granitt.PROGRAMMES_CATEGORIES_MAP",
+				"Granitt.TRANSMISSIONS",
+				"Granitt.CATEGORIES",
+				"Granitt.PROGRAMMES_DESCRIPTIONS",
+				"Granitt.PROGRAMMES",
+				"Granitt.PROGRAMMES_TITLES",
+				"Granitt._V_WEB_PROGRAM_TRANSMISSIONS",
+				"Granitt.METADATA_SOURCE_PRIORITIES",
+				"Granitt.V_WEB_PROGRAMMES_INFO",
+				"Granitt.SEASONS",
+				"Granitt.RIGHTS",
+				"Granitt.SERIES"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "_V_Web_Program_Transmissions", 
+    "type"   : "view",
+	"from"   : ["Granitt.CHANNELS",
+				"Granitt.TRANSMISSIONS",
+				"Granitt.PROGRAMMES"]
+  },
+  { 
+    "schema" : "Granitt", 
+    "name"   : "V_Web_Programmes_Info", 
+    "type"   : "view",
+	"from"   : ["Granitt.LISTS",
+				"Granitt.PROGRAMMES",
+				"Granitt.LISTS_PLUGS",
+				"Granitt.FILESETS_PARTS",
+				"Granitt.LISTS_OBJECTS_MAP"]
   }
   
 
