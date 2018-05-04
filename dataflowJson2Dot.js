@@ -3,6 +3,8 @@
 var _ = require('lodash');
 var data = require('./GranittSyncDataFlow.json');
 
+// https://www.graphviz.org/documentation/
+
 var nodeTypeAttributes = {"table": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="azure3"',
 						  "synonym": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="gold"',
 						  "view": 'fontsize = "16", shape = "record", height=0.1, style="filled", color=lightblue2, fillcolor="darkviolet"',
