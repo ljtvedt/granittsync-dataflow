@@ -87,7 +87,7 @@
     "schema" : "Granitt", 
     "name"   : "Programmes", 
     "type"   : "table",
-	"from"   : ["Granitt.MV_PI_PROGRAM", "Granitt.TRANSMISSIONS", "Granitt.CHANNELS"] 
+	"from"   : [{"source": "Granitt.MV_PI_PROGRAM", "by": "Pi_Sync.Sync_Programs"}, "Granitt.TRANSMISSIONS", "Granitt.CHANNELS"] 
   },
   { 
     "schema" : "Granitt", 

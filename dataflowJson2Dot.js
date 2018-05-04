@@ -18,6 +18,15 @@ function nodeUniqueName(node) {
 	return (node.schema + '.' + node.name).toUpperCase()
 }
 
+function edge(s, t) {
+	if (_.isObject(s)) {
+		return {from: s.source.toUpperCase(), to: nodeUniqueName(t), by: s.by}
+	}
+	else {
+		return{from: s.toUpperCase(), to: nodeUniqueName(t)}
+	}
+}
+
 function handleNode (obj) {
 var node = {id: nodeCounter++, schema: obj.schema, name: obj.name, type: obj.type};
 	
@@ -25,10 +34,10 @@ var node = {id: nodeCounter++, schema: obj.schema, name: obj.name, type: obj.typ
 	if ('from' in obj) {
 		if (_.isArray(obj.from)) {
 		    _.map(obj.from, function(n) {
-				edges.push({from: n.toUpperCase(), to: nodeUniqueName(node)})
+				edges.push(edge(n, node));
 			});
 		} else {
-			edges.push({from: obj.from.toUpperCase(), to: nodeUniqueName(node)})
+			edges.push(edge(obj.from, node))
 		}
 	}
 }
@@ -52,15 +61,27 @@ function attrLabel(node) {
 }
 
 function attrURL(node) {
-return `href="https://confluence.nrk.no/display/ODA/${node.name.toUpperCase()}" target="_graphviz"` 
+	return `href="https://confluence.nrk.no/display/ODA/${node.name.toUpperCase()}" target="_graphviz"` 
 }
 
 function nodeAttributes(node) {
 	return `[${attrLabel(node)}, ${attrToolTip(node)}, ${attrURL(node)}, ${nodeTypeAttributes[node.type]}];`
 }
 
-function edgeStmt(from, to) {
-	return `${nodes[from].id}->${nodes[to].id} [tooltip="From: ${nodes[from].name}&#013;&#010;To: ${nodes[to].name}"];`
+function edgeStmt(from, to, by) {
+	var stmt = `${nodes[from].id}->${nodes[to].id}`
+	var tooltip = `tooltip="From: ${nodes[from].name}&#013;&#010;To: ${nodes[to].name}"`
+	var color = "";
+	var label = "";
+	
+	if (by != undefined) {
+		color = `color="red"`
+		label = `label="${by}"`;
+	} else {
+		color = `color="black"`
+		label = `label=""`;
+	}
+	return `${stmt} [${label}, ${tooltip}, ${color}];`
 }
 
 handleNodeArray(data);
@@ -81,7 +102,7 @@ _.map(Object.keys(cluster), function (k) {
 
 _.map(edges, function (e) {
 	if (nodes[e.from.toUpperCase()] != undefined) {
-		console.log(edgeStmt(e.from, e.to));
+		console.log(edgeStmt(e.from, e.to, e.by));
 	} else {
 		throw "Unable to identify node with name " + e.from;
 	}
